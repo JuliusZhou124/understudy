@@ -1,0 +1,12 @@
+strategy               n    deal   excess $  discount  turns
+two_offer_close      125     26%        -57      1.9%    9.2
+deflect_first        125     17%        -61      0.9%   11.6
+anchor_low           125     13%        -62      0.6%   13.3
+walk_threat          125      6%        -63      0.3%    7.9
+
+Paired bootstrap vs anchor_low (excess savings, 95% CI):
+  deflect_first_vs_anchor_low                  +1.1  [   +0.2,    +2.3]  *
+  two_offer_close_vs_anchor_low                +4.7  [   +2.5,    +7.0]  *
+  walk_threat_vs_anchor_low                    -0.7  [   -1.3,    -0.3]  *
+
+  * = CI excludes zero

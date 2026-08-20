@@ -1,0 +1,9 @@
+Calibration on 60 held-out sold listings (SYNTHETIC settle prices)
+
+  simulator MAE      $7
+  simulator MAPE     2.7%
+  coverage@80        3%   (target 80%)
+  CRPS               $7
+  baseline MAE       $69   (predict the SKU sold median)
+
+  simulator BEATS the baseline on point accuracy.

@@ -1,0 +1,205 @@
+/* ============================================================
+   UNDERSTUDY — market sheet.
+   Palette and type borrowed from lowball (github.com/Arsh-S/lowball):
+   ink on bone paper, plate yellow, one stamp red, hard offset shadows,
+   hairline rules, zero radius.
+
+   Remapped so colour still encodes provenance:
+     plate yellow = OBSERVED (real sold prices)
+     stamp red    = SIMULATED
+     LED green    = savings / deal
+     hatching     = SYNTHETIC data, anywhere it appears
+   ============================================================ */
+
+:root{
+  --night:#0d0c0a;
+  --paper:#f1ecdf;
+  --paper2:#faf7ee;
+  --ink:#16140f;
+  --ink-soft:#6b675c;
+  --rule:rgba(22,20,15,.22);
+  --bone:#ede8da;
+  --plate:#f2c230;          /* observed */
+  --plate-deep:#c99b12;
+  --red:#c22f1d;            /* simulated */
+  --green:#1a7a3c;          /* savings on paper */
+  --led-green:#4ade80;      /* savings on black */
+  --disp:'Big Shoulders Display','Arial Narrow',sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,monospace;
+}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--night);color:var(--ink);font-family:var(--mono);font-size:14px}
+::selection{background:var(--plate);color:var(--ink)}
+button,input,select{font:inherit}
+h2,h3{font-family:var(--disp);text-transform:uppercase;letter-spacing:.03em;margin:0}
+h2{font-weight:800;font-size:26px;line-height:1}
+h3{font-weight:700;font-size:17px;display:flex;gap:9px;align-items:baseline}
+h3 em{font-style:normal;font-family:var(--mono);font-size:10px;font-weight:400;
+  letter-spacing:.14em;color:var(--ink-soft)}
+/* Says what generated the text below it. Same weight as the synthetic-data
+   hatching: unlabelled output is the thing to avoid. */
+.engine-tag{font-family:var(--mono);font-size:9.5px;font-weight:600;letter-spacing:.12em;
+  text-transform:uppercase;padding:2px 6px 1px;border:1px solid var(--ink);
+  background:var(--paper2);color:var(--ink-soft)}
+.engine-tag--live{background:var(--plate);border-color:var(--ink);color:var(--ink)}
+code{font-family:var(--mono);font-size:.92em;background:rgba(22,20,15,.07);padding:1px 4px}
+pre{margin:0;padding:12px 14px;overflow-x:auto;background:var(--ink);color:var(--bone);
+  font:400 11.5px/1.6 var(--mono)}
+
+/* ---- the sheet ---- */
+.sheet{max-width:1440px;margin:0 auto;background:var(--paper);
+  border-left:1px solid var(--ink);border-right:1px solid var(--ink);min-height:100vh}
+
+.masthead{display:flex;flex-wrap:wrap;gap:14px 28px;align-items:flex-end;justify-content:space-between;
+  padding:22px 26px 16px;background:var(--ink);color:var(--paper)}
+.wordmark{font-family:var(--disp);font-weight:800;font-size:30px;letter-spacing:.05em;
+  text-transform:uppercase;line-height:1}
+.wordmark span{font-family:var(--mono);font-size:12px;font-weight:400;letter-spacing:.16em;
+  color:rgba(241,236,223,.6);text-transform:none}
+.readout{display:flex;flex-wrap:wrap;gap:22px;margin:0}
+.readout div{display:flex;flex-direction:column;gap:2px}
+.readout dt{font-size:9.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(241,236,223,.5)}
+.readout dd{margin:0;font-size:16px;font-weight:600;color:var(--plate)}
+
+/* ---- provenance stamp ---- */
+.stamp-note{display:flex;gap:12px;align-items:flex-start;margin:20px 26px 0;padding:12px 14px;
+  background:var(--paper2);border:2px solid var(--red);box-shadow:4px 4px 0 rgba(22,20,15,.18)}
+.stamp-note p{margin:0;font-size:12px;line-height:1.6;max-width:92ch}
+.stamp-note strong{font-family:var(--disp);font-weight:700;font-size:15px;letter-spacing:.03em;
+  text-transform:uppercase;color:var(--red)}
+.hatch-key{width:20px;height:20px;flex:none;border:1px solid var(--ink);
+  background:repeating-linear-gradient(45deg,var(--plate) 0 4px,var(--paper2) 4px 8px)}
+
+/* ---- blocks ---- */
+.block{padding:24px 26px 26px;border-top:1px solid var(--rule)}
+.block__head{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;justify-content:space-between;
+  margin-bottom:16px}
+.cols{display:grid;gap:26px}
+@media(min-width:820px){.cols{grid-template-columns:1fr 1fr}}
+
+/* ---- filter bar ---- */
+.fbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.fbar input,.fbar select{background:var(--paper2);border:1px solid var(--ink);color:var(--ink);
+  padding:7px 9px;font-size:12px;border-radius:0}
+.fbar input#ftext{min-width:15rem}
+.fbar input#fmax,.fbar input#runs{width:6.5rem}
+.fcount{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+
+.btn{background:var(--paper2);border:2px solid var(--ink);color:var(--ink);
+  font-family:var(--disp);font-weight:700;font-size:14px;letter-spacing:.07em;text-transform:uppercase;
+  padding:7px 15px;cursor:pointer;box-shadow:3px 3px 0 rgba(22,20,15,.35);transition:transform .08s,box-shadow .08s}
+.btn:hover:not(:disabled){background:var(--plate)}
+.btn:active:not(:disabled){transform:translate(3px,3px);box-shadow:0 0 0 rgba(0,0,0,0)}
+.btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
+.btn--stamp{background:var(--red);color:var(--paper);border-color:var(--ink)}
+.btn--stamp:hover:not(:disabled){background:var(--ink)}
+.btn--wide{display:block;width:100%;box-shadow:none;border:0;border-top:2px solid var(--ink)}
+:focus-visible{outline:3px solid var(--red);outline-offset:2px}
+
+/* ---- inventory cards ---- */
+/* 200 cards is a 8,000px wall; scroll them inside the block instead. The 6px
+   padding keeps the cards' hard offset shadows from being clipped. */
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(268px,1fr));
+  max-height:min(62vh,660px);overflow-y:auto;padding:6px 8px 10px 10px;margin:-6px -8px -10px -10px}
+.empty{color:var(--ink-soft);font-size:12px}
+.card{position:relative;background:var(--paper2);border:2px solid var(--ink);
+  box-shadow:5px 5px 0 rgba(22,20,15,.35);cursor:pointer;text-align:left;padding:0;
+  transition:transform .1s,box-shadow .1s;font:inherit;color:inherit;display:block;width:100%}
+.card:hover{transform:translate(-2px,-2px);box-shadow:8px 8px 0 rgba(22,20,15,.4)}
+.card[aria-pressed="true"]{background:var(--plate)}
+.card__plate{display:flex;align-items:baseline;justify-content:space-between;gap:10px;
+  background:var(--ink);color:var(--plate);padding:7px 12px}
+.card__ask{font-weight:600;font-size:19px;letter-spacing:.02em;font-variant-numeric:tabular-nums}
+.card__median{font-size:10.5px;color:rgba(241,236,223,.6);letter-spacing:.08em}
+.card__body{padding:12px 13px 13px}
+.card__title{font-family:var(--disp);font-weight:700;font-size:17px;line-height:1.12;
+  text-transform:uppercase;margin:0 0 7px;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card__why{font-size:11px;line-height:1.55;color:var(--red);border-left:3px solid var(--red);
+  padding:2px 0 2px 9px}
+.card__why.cool{color:var(--ink-soft);border-left-color:var(--rule)}
+.card__badge{position:absolute;top:10px;left:-9px;z-index:2;transform:rotate(-4deg);
+  background:var(--paper2);border:2px solid var(--red);padding:4px 8px;
+  box-shadow:2px 2px 0 rgba(22,20,15,.5);
+  font-size:9.5px;font-weight:600;line-height:1;letter-spacing:.14em;text-transform:uppercase;color:var(--red)}
+
+/* ---- scope: observed vs simulated on one axis ---- */
+.scope{margin:0 0 22px}
+.scope figcaption{display:flex;flex-wrap:wrap;gap:18px;margin-bottom:9px}
+.key{display:inline-flex;align-items:center;gap:6px;font-size:10px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-soft)}
+.sw{width:13px;height:13px;border:1px solid var(--ink)}
+.sw--observed{background:var(--plate)}
+.sw--simulated{background:var(--red)}
+#plot{display:grid;gap:4px}
+.lane{position:relative;height:52px;background:var(--paper2);border:1px solid var(--ink)}
+.lane__label{position:absolute;left:8px;top:5px;z-index:2;font-size:9.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-soft)}
+.bar{position:absolute;bottom:0}
+.bar--observed{background:var(--plate)}
+.bar--simulated{background:var(--red)}
+.bar--synthetic{background-image:repeating-linear-gradient(45deg,rgba(250,247,238,.9) 0 2px,transparent 2px 5px)}
+.tick{position:absolute;top:0;bottom:0;width:2px;z-index:3;background:var(--ink)}
+.lane--axis{height:36px}
+.tick span{position:absolute;top:3px;left:5px;white-space:nowrap;font-size:9.5px;letter-spacing:.06em;
+  background:var(--paper2);padding:0 2px}
+.tick span.tick__low{top:19px}
+.axis{display:flex;justify-content:space-between;font-size:10px;color:var(--ink-soft);padding-top:3px}
+
+/* ---- packet ---- */
+.facts{margin:0 0 14px;padding-left:17px;font-size:12.5px;line-height:1.6}
+.facts li{margin-bottom:5px}
+.dfacts{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:1px;
+  border:1px solid var(--rule);background:var(--rule)}
+.dfact{background:var(--paper2);padding:8px 10px}
+.dfact .lbl{font-size:9px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft)}
+.dfact .val{font-weight:600;font-size:15px;margin-top:3px;font-variant-numeric:tabular-nums}
+
+/* ---- transcript / feed ---- */
+.feed{max-height:280px;overflow-y:auto;padding:0;margin:0;list-style:none;display:flex;flex-direction:column}
+.feed--static{border:1px solid var(--rule);padding:0 12px;background:var(--paper2)}
+.msg{font-size:12.5px;line-height:1.55;padding:8px 0;border-bottom:1px dotted var(--rule)}
+.msg:last-child{border-bottom:0}
+.msg .who{display:inline-block;font-size:9px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;
+  padding:2px 6px 1px;margin-right:8px;vertical-align:1px}
+.msg.buyer  .who{background:var(--red);color:var(--paper)}
+.msg.seller .who{background:transparent;color:var(--ink);border:1px solid var(--ink)}
+.msg.system{color:var(--ink-soft);font-style:italic}
+.msg.system .who{color:var(--ink-soft);border:1px solid var(--rule);font-style:normal}
+
+/* ---- call card ---- */
+#call-modal{position:fixed;inset:0;z-index:60;display:none;place-items:center;padding:22px;
+  background:rgba(13,12,10,.85)}
+#call-modal.show{display:grid}
+.callcard{width:min(540px,95vw);max-height:92vh;overflow-y:auto;background:var(--paper);
+  border:2px solid var(--ink);box-shadow:10px 10px 0 rgba(0,0,0,.5)}
+.callcard .top{display:flex;align-items:center;gap:12px;background:var(--ink);color:var(--paper);
+  padding:13px 16px}
+.callcard .top h3{margin:0;font-size:19px;color:var(--paper)}
+.callcard .top .sub{color:rgba(241,236,223,.62);font-size:11px;margin-top:3px}
+.pulse{width:11px;height:11px;background:var(--red);flex:none;animation:blink 1.1s steps(2,start) infinite}
+@keyframes blink{to{visibility:hidden}}
+@media(prefers-reduced-motion:reduce){.pulse{animation:none}}
+
+.ticker{text-align:center;background:#0a0908;color:var(--paper);padding:16px 16px 15px;
+  border-bottom:2px solid var(--ink)}
+.ticker .lbl{font-size:9.5px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;
+  color:rgba(241,236,223,.5)}
+.ticker .amt{font-weight:600;font-size:44px;line-height:1.1;letter-spacing:.04em;
+  font-variant-numeric:tabular-nums;color:var(--plate);margin-top:3px;transition:color .3s}
+.ticker .amt.drop{color:var(--led-green)}
+.ticker .save{color:var(--led-green);font-size:12.5px;font-weight:600;letter-spacing:.06em;
+  margin-top:4px;min-height:18px}
+.callcard .feed{padding:6px 16px 4px;max-height:220px}
+
+.receipt{border-top:2px solid var(--ink);background:var(--paper2);padding:12px 16px}
+.receipt__row{display:flex;justify-content:space-between;gap:12px;padding:4px 0;font-size:12.5px}
+.receipt__row b{font-variant-numeric:tabular-nums}
+.receipt__row--big{border-top:1px solid var(--rule);margin-top:5px;padding-top:8px;
+  font-family:var(--disp);text-transform:uppercase;font-size:17px;font-weight:700;color:var(--green)}
+.receipt__row--big b{font-family:var(--mono);font-size:20px;color:var(--green)}
+
+#confetti{position:fixed;inset:0;z-index:70;pointer-events:none;display:none}
+#confetti.show{display:block}

@@ -1,0 +1,245 @@
+[
+  {
+    "id": "rtx3080",
+    "brand": "NVIDIA",
+    "model": "RTX 3080",
+    "aliases": [
+      "rtx 3080",
+      "rtx3080"
+    ]
+  },
+  {
+    "id": "rtx3070",
+    "brand": "NVIDIA",
+    "model": "RTX 3070",
+    "aliases": [
+      "rtx 3070",
+      "rtx3070"
+    ]
+  },
+  {
+    "id": "rtx3060",
+    "brand": "NVIDIA",
+    "model": "RTX 3060",
+    "aliases": [
+      "rtx 3060",
+      "rtx3060"
+    ]
+  },
+  {
+    "id": "rtx3060ti",
+    "brand": "NVIDIA",
+    "model": "RTX 3060 Ti",
+    "aliases": [
+      "rtx 3060 ti",
+      "rtx3060ti"
+    ]
+  },
+  {
+    "id": "rtx4070",
+    "brand": "NVIDIA",
+    "model": "RTX 4070",
+    "aliases": [
+      "rtx 4070",
+      "rtx4070"
+    ]
+  },
+  {
+    "id": "rx6800xt",
+    "brand": "AMD",
+    "model": "RX 6800 XT",
+    "aliases": [
+      "rx 6800 xt",
+      "rx6800xt"
+    ]
+  },
+  {
+    "id": "rtx4070super",
+    "brand": "NVIDIA",
+    "model": "RTX 4070 Super",
+    "aliases": [
+      "rtx 4070 super",
+      "rtx4070super"
+    ]
+  },
+  {
+    "id": "rtx4070ti",
+    "brand": "NVIDIA",
+    "model": "RTX 4070 Ti",
+    "aliases": [
+      "rtx 4070 ti",
+      "rtx4070ti"
+    ]
+  },
+  {
+    "id": "rtx3070ti",
+    "brand": "NVIDIA",
+    "model": "RTX 3070 Ti",
+    "aliases": [
+      "rtx 3070 ti",
+      "rtx3070ti"
+    ]
+  },
+  {
+    "id": "rx6800",
+    "brand": "AMD",
+    "model": "RX 6800",
+    "aliases": [
+      "rx 6800",
+      "rx6800"
+    ]
+  },
+  {
+    "id": "rtx3080ti",
+    "brand": "NVIDIA",
+    "model": "RTX 3080 Ti",
+    "aliases": [
+      "rtx 3080 ti",
+      "rtx3080ti"
+    ]
+  },
+  {
+    "id": "rtx4070tisuper",
+    "brand": "NVIDIA",
+    "model": "RTX 4070 Ti Super",
+    "aliases": [
+      "rtx 4070 ti super",
+      "rtx4070tisuper"
+    ]
+  },
+  {
+    "id": "rx6900xt",
+    "brand": "AMD",
+    "model": "RX 6900 XT",
+    "aliases": [
+      "rx 6900 xt",
+      "rx6900xt"
+    ]
+  },
+  {
+    "id": "rx7800xt",
+    "brand": "AMD",
+    "model": "RX 7800 XT",
+    "aliases": [
+      "rx 7800 xt",
+      "rx7800xt"
+    ]
+  },
+  {
+    "id": "rx9060xt",
+    "brand": "AMD",
+    "model": "RX 9060 XT",
+    "aliases": [
+      "rx 9060 xt",
+      "rx9060xt"
+    ]
+  },
+  {
+    "id": "rx6950xt",
+    "brand": "AMD",
+    "model": "RX 6950 XT",
+    "aliases": [
+      "rx 6950 xt",
+      "rx6950xt"
+    ]
+  },
+  {
+    "id": "rx9070xt",
+    "brand": "AMD",
+    "model": "RX 9070 XT",
+    "aliases": [
+      "rx 9070 xt",
+      "rx9070xt"
+    ]
+  },
+  {
+    "id": "rx7600xt",
+    "brand": "AMD",
+    "model": "RX 7600 XT",
+    "aliases": [
+      "rx 7600 xt",
+      "rx7600xt"
+    ]
+  },
+  {
+    "id": "rx6700xt",
+    "brand": "AMD",
+    "model": "RX 6700 XT",
+    "aliases": [
+      "rx 6700 xt",
+      "rx6700xt"
+    ]
+  },
+  {
+    "id": "rx7900",
+    "brand": "AMD",
+    "model": "RX 7900",
+    "aliases": [
+      "rx 7900",
+      "rx7900"
+    ]
+  },
+  {
+    "id": "rx9070",
+    "brand": "AMD",
+    "model": "RX 9070",
+    "aliases": [
+      "rx 9070",
+      "rx9070"
+    ]
+  },
+  {
+    "id": "rtx2080",
+    "brand": "NVIDIA",
+    "model": "RTX 2080",
+    "aliases": [
+      "rtx 2080",
+      "rtx2080"
+    ]
+  },
+  {
+    "id": "rtx4000",
+    "brand": "NVIDIA",
+    "model": "RTX 4000",
+    "aliases": [
+      "rtx 4000",
+      "rtx4000"
+    ]
+  },
+  {
+    "id": "rx5700xt",
+    "brand": "AMD",
+    "model": "RX 5700 XT",
+    "aliases": [
+      "rx 5700 xt",
+      "rx5700xt"
+    ]
+  },
+  {
+    "id": "rtx2070",
+    "brand": "NVIDIA",
+    "model": "RTX 2070",
+    "aliases": [
+      "rtx 2070",
+      "rtx2070"
+    ]
+  },
+  {
+    "id": "rx6900",
+    "brand": "AMD",
+    "model": "RX 6900",
+    "aliases": [
+      "rx 6900",
+      "rx6900"
+    ]
+  },
+  {
+    "id": "rx7700",
+    "brand": "AMD",
+    "model": "RX 7700",
+    "aliases": [
+      "rx 7700",
+      "rx7700"
+    ]
+  }
+]

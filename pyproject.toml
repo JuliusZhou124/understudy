@@ -1,0 +1,14 @@
+[project]
+name = "understudy"
+version = "0.1.0"
+requires-python = ">=3.13"
+dependencies = ["pydantic>=2", "fastapi", "uvicorn", "httpx", "numpy", "scikit-learn", "python-dotenv"]
+
+[project.optional-dependencies]
+llm = ["anthropic"]
+scrape = ["playwright"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["live: requires network or API keys (deselected by default)"]
+addopts = "-m 'not live' -q"
