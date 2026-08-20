@@ -128,55 +128,12 @@ Nothing here has met a human seller. See Next steps.
 
 ---
 
-## What the measurement caught
-
-Four bugs that only a real eval surfaces, all now covered by regression tests:
-
-1. **Train/serve skew on `days_listed`** *(`tests/test_train_serve_skew.py`)*
-   Hiding a sold listing's `sold_at` during calibration also erased its age: the model
-   saw 60 days at fit time and **0** at predict time, read every listing as brand new,
-   and predicted reservation ratios that were far too high. Worth **+$24.77 of systematic
-   bias**. Fixing it took MAE from **$25 → $7**.
-
-2. **A negotiator reading back its own quote** *(`tests/test_llm.py`)*
-   The seller scanned the whole conversation for the last dollar figure — including its
-   own previous message. The moment the buyer said anything without a number in it, the
-   seller "accepted its own asking price". This made `deflect_first` look like a 100%
-   deal rate at 0% discount, i.e. the best strategy in the suite.
-
-3. **The buyer bidding past its own walk-away** *(`tests/test_sim.py`)*
-   The concession ladder had no ceiling, so the buyer climbed above its limit and the
-   seller happily accepted — settling at $491 against a $400 cap.
-
-4. **Similarity search on raw titles, where the shortest token matters most**
-   *(`tests/test_resolve_accuracy.py`)*
-   `"RTX 3080"` and `"RTX 3080 Ti"` are ~95% identical as strings and are different
-   products at different prices, so cosine similarity happily merged them. 45% accurate
-   on hand labels. Fixed by extracting the model designation with an explicit grammar
-   first — variant suffix included, ordered so `Ti Super` is tried before `Ti` — and
-   fuzzy-matching only the normalised token, where a different model cannot win. 100% on
-   the same labels. **The right lesson is that embeddings were the wrong tool for a
-   structured namespace**, and the measurement is what said so.
-
-   Following that through honestly: the embedding path now fires **0 times out of 590**.
-   Every extracted model token hits the exact catalogue lookup, so the `Embedder`
-   protocol and its two implementations are vestigial in the resolution path. This
-   project does not demonstrate vector search, and dressing up a 27-row dictionary
-   lookup as one would be worse than saying so.
-
-A fifth was a data-quality problem rather than a bug: **multi-unit lots**
-("LOT OF 4 RTX 3080", $1,250) were ranked as the most over-priced listings *and* were
-inflating the sold-price medians they were compared against. They are now detected and
-excluded from both.
-
----
-
 ## How it works
 
 ```
 eBay active search ──► ingest ──► resolve ──► truth ──► persona ──► sim ──► calibrate
-   (real, scraped)      (PII       (embed-    (fit      (sample    (buyer   (vs actual
-                       stripped)   dings)    quantile   floor)     vs       settle)
+   (real, scraped)                 (embed-    (fit      (sample    (buyer   (vs actual
+                                     dings)    quantile   floor)     vs       settle)
                                              model)                seller)
                                                                       │
    repeated snapshots ──► inferred sales ────────┘                    ▼
@@ -209,26 +166,6 @@ real LLM. Reports say which half produced a number.
 This distinction was forced by a finding: the first A/B run returned four **identical**
 arms, because strategies were prompt-only and the stub never reads prompts. The harness
 was right — it reported zero difference with zero-width CIs — the substrate was wrong.
-
-### Zero fabrication, by construction
-
-The briefing packet is the agent's entire fact base, built in one place from the listing
-and the SKU statistics. Anything the agent asserts that is not in the packet is, by
-definition, fabricated — which is what `judge.py` is built to look for, alongside
-`revealed_target`, `claimed_human`, `named_number_first` and `caved_immediately`.
-
-**Judge results are provisional.** The judge itself is unvalidated — no hand labels, no
-Cohen's κ — so the 55–90% violation rates it reports may be measuring its own quirks
-rather than the agent's behaviour. Most of that rate is `named_number_first` firing
-against a rule engine that mechanically names a price every turn. `violation_rate` reads
-`None` rather than `0.0` when nothing graded it, because those are different claims.
-
-Earlier state, kept for the record: **the judge had never run.** `grade_transcript` is not called from the eval loop, so the
-`violation_rate` column in the A/B table is always 0, and the `cohens_kappa` function that
-would validate the judge against hand labels has no labels to score against. Grading costs
-a model call per transcript, so it is blocked on an API key like the rest of the
-LLM-dependent work. An unvalidated instrument measures nothing, and this one is not yet
-an instrument at all.
 
 ---
 
