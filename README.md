@@ -115,16 +115,7 @@ Excess savings is negative throughout: these listings are asking *above* the SKU
 so beating the ask still means paying over the market median. Non-deals are scored as
 paying the full ask, so a strategy cannot win by only closing its easiest listings.
 
-**What this comparison cannot show.** The confidence intervals are real; what they are
-intervals *about* is an assumption I wrote. I authored both the buyer strategies and the
-seller's concession rule — the stub seller yields a fixed fraction of the remaining gap
-each turn — so a strategy that closes gaps faster wins partly by construction.
-`two_offer_close` beating `anchor_low` by $4.7 is a fact about this simulator, not about
-negotiating with people. The same applies to the whole chain: settle prices come from a
-formula in `synthetic.py`, the reservation model is fitted to those numbers, persona
-floors are sampled from that model, and calibration is scored back against the same
-formula. **Calibration measures whether the estimator recovers a process I specified.**
-Nothing here has met a human seller. See Next steps.
+Strategies and concessions right now are based on simulated and manually determined rules. See Next Steps
 
 ---
 
